@@ -1,8 +1,5 @@
 @import './variable';
 
-
-
-
 .inner {
   width: 100%;
   max-width: $maxWidth;
@@ -18,10 +15,7 @@
 
 
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 1000px;
+  width: $maxWidth;
   margin: 0 auto;
   padding: 10px 0;
 
@@ -38,23 +32,22 @@
 
     & > li {
       margin-left: 30px;
-
-      /* 擬似クラスもこのように書く事が可能 */
+      
       &:first-child {
         margin-left: 0;
       }
     }
-  }
-  &__link {
-    text-decoration: none;
-    color: #666;
-    font: {
-      size: 16px;
-      weight: bold;
-    }
-
-    &:hover {
-      color: $brandColor;
+    &__link {
+      text-decoration: none;
+      color: #666;
+      font: {
+        size: $headerNavFontSize;
+        weight: bold;
+      }
+  
+      &:hover {
+        color: $brandColor;
+      }
     }
   }
 }
@@ -67,7 +60,7 @@
     color: #333;
     text-align: center;
     font: {
-      size: 20px;
+      size: $TitleFontSize;
       weight: bold;
     }
   }
@@ -76,20 +69,20 @@
 .children {
   &__ttl {
     @extend .parent__ttl;
-    background-color: #f5f5f5;
+    background-color: $TitleBackgroundColor;
   }
 }
 
 .footer {
-  $map:($sns);
-  @debug $map;
-  @mixin btn($color) {
+  $map:($snsList);
+  // @debug $map;
+  @mixin btn($snsColor) {
     display: block;
     padding: 20px 30px;
     color: #fff;
     border-radius: 6px;
     cursor: pointer;
-    background-color: $color;
+    background-color: $snsColor;
     text: {
       decoration: none;
       align: center;
@@ -112,10 +105,43 @@
       }
     }
     &__btn {
+      //問題1
+      // &.is-facebook {
+      //   @include btn(#4668b3);
+      // }
+      // &.is-google {
+      //   @include btn(#de5745);
+      // }
+      // &.is-twitter{
+      //   @include btn(#2fbbed);
+      // }
+      // &.is-pinterest{
+      //   @include btn(#d94348);
+      // }
+      // &.is-behance {
+      //   @include btn(#3079ff);
+      // }
+      // &.is-dribbble {
+      //   @include btn(#eb6397);
+      // }
+
+      //問題2
+      // $snsTypeList: facebook, google, twitter, pinterest, behance, dribbble;
+      // $snsColorList: #4668b3, #de5745, #2fbbed, #d94348, #3079ff, #eb6397;
+
+      // @each $snsType in $snsTypeList {
+      //   $index_key: index($snsTypeList, $snsType); // indexの取得
+      //   &.is-#{$snsType} {
+      //     $snsColor: nth($snsColorList, $index_key);
+      //     @include btn($snsColor);
+      //   }
+      // }
+
+      //問題3
       @each $class, $colors in $map {
         &.is-#{$class} {
-          $color: map-get($map, $class);
-          @include btn($color);
+          $snsColor: map-get($map, $class);
+          @include btn($snsColor);
         }
       }
     }
